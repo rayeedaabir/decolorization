@@ -1,0 +1,54 @@
+# ==============================================================
+#  .gitignore — the list of things git should NOT track.
+#  Any file matching a pattern below is skipped when you `git add`.
+#  Patterns match at ANY depth, so this works whether the repo root
+#  is "Project 1/" or "codes/".
+# ==============================================================
+
+# ---- Virtual environment (yours is the "image" folder) -------
+image/
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Python bytecode / build junk ----------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# ---- Datasets: huge and licence-restricted. NEVER commit -----
+data/
+datasets/
+cache/
+*.npz
+*.npy
+
+# ---- Papers: copyrighted PDFs. NEVER commit (esp. public) ----
+Research Papers/
+*.pdf
+
+# ---- Trained model weights (large binaries) ------------------
+*.pt
+*.pth
+*.ckpt
+#   a small checkpoint can still be forced in:  git add -f fusion_vit.pt
+
+# ---- Generated outputs (regenerate with the scripts) ---------
+figs/
+outputs/
+targets_*.csv
+#   want one figure tracked anyway?  git add -f figs/modular_pipeline.png
+
+# ---- OS / editor cruft ---------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ---- Secrets (a habit worth keeping) -------------------------
+.env
+*.key
