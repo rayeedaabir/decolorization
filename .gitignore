@@ -24,6 +24,7 @@ datasets/
 cache/
 *.npz
 *.npy
+legacy/
 
 # ---- Papers: copyrighted PDFs. NEVER commit (esp. public) ----
 Research Papers/
