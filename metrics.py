@@ -1,13 +1,13 @@
 """Decolorization quality metrics.
 
-- contrast_metrics: CCPR / CCFR / E-score  (Lu et al., 2014; Paper 3 eqs 23-25)
-- isoluminant_collapse: how many equal-brightness colour pairs merge (Paper 3 eq 26)
+- contrast_metrics: CCPR / CCFR / E-score  (Lu et al., IJCV 2014)
+- isoluminant_collapse: how many equal-brightness colour pairs merge to the same gray
 
 NOTE on scale: colour difference is CIELAB deltaE (full L*a*b*); grayscale
 difference is taken on a 0-100 scale so the two are comparable under a shared
-threshold tau. This matches the spirit of the CCPR/CCFR definitions; if you
-need to reproduce Paper 3's exact numbers, align the tau sweep + sampling with
-their setup (500 pairs, tau = 1..40).
+threshold tau. This matches the spirit of the CCPR/CCFR definitions of
+Lu et al. (IJCV 2014); align the tau sweep + sampling if you need to match a
+particular paper's protocol.
 """
 import numpy as np
 from color import srgb_to_lab, lab_to_srgb

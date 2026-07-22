@@ -24,16 +24,23 @@ def load(p, size=256):
 
 def search(rgb, n_samples, rng):
     cues = cue_bank(rgb)
-    quick = lambda g: contrast_metrics(rgb, g, taus=SEARCH_TAUS, n_pairs=1500)["E"]
-    best_w, best_e = BT709.copy(), quick(fuse_cues(cues, BT709))
+    quick = lambda w: contrast_metrics(rgb, fuse_cues(cues, w), taus=SEARCH_TAUS, n_pairs=2500)["E"]
+    full = lambda w: contrast_metrics(rgb, fuse_cues(cues, w))["E"]
+    # coarse random search over the cue simplex
+    best_w, best_q = BT709.copy(), quick(BT709)
     for _ in range(n_samples):
         w = rng.dirichlet(np.ones(N_CUES))
-        e = quick(fuse_cues(cues, w))
+        q = quick(w)
+        if q > best_q:
+            best_q, best_w = q, w
+    # refine on the FULL metric (what we report) by local hill-climbing
+    best_e = full(best_w)
+    for _ in range(50):
+        cand = np.abs(best_w + rng.normal(0, 0.07, N_CUES)); cand /= cand.sum() + 1e-9
+        e = full(cand)
         if e > best_e:
-            best_e, best_w = e, w
-    # final scores on the full tau sweep
-    return (contrast_metrics(rgb, fuse_cues(cues, BT709))["E"],
-            contrast_metrics(rgb, fuse_cues(cues, best_w))["E"], best_w)
+            best_e, best_w = e, cand
+    return full(BT709), best_e, best_w
 
 
 def main():

@@ -1,98 +1,106 @@
-# Commands — decolor-harness
+# Commands — full pipeline
 
-Run everything from inside `decolor-harness/`. Activate your env first
-(`.venv\Scripts\activate`) and put datasets under `data/` (see `DATASETS.md`).
-
-Registered methods (use as `--decolorizer`): `bt601`, `bt709`, `average`,
-`paper3_b1` (chaos), `paper3_b12` (+Retinex), `paper3_b123` (+chroma = base),
-`paper3` (full, with post-processing).
+Run everything from inside the code folder with your `image` env active.
+Methods available: `bt601`, `bt709`, `average`, plus `vit:CKPT.pt` (Stage 1) and
+`vit2:CKPT.pt` (Stage 2). PowerShell syntax where loops are used.
 
 ---
 
-## 1. Verify the code — no data needed
-```
+## 0 · Verify the install
+```powershell
 python test_core.py
 ```
-**Output:** each test prints values, ending in `ALL CORE TESTS PASSED`. Confirms the
-colour math, metrics, and all three Paper 3 branches work.
+Expect `ALL CORE TESTS PASSED` and `cues=['R','G','B','MSR','CHROMA']`.
 
-## 2. Prepare the quality datasets — one-time
-```
+## 1 · Dataset prep — one-time (skip if `data/Cadik_rgb` + `data/Color250_rgb` exist)
+```powershell
 python prep_datasets.py --cadik data/Cadik --color250 data/Color250/images
 ```
-**Output:**
-```
-Cadik:    wrote 25 originals -> data/Cadik_rgb  (expected 25)
-Color250: wrote 250 originals -> data/Color250_rgb  (expected 250)
-```
-Creates `data/Cadik_rgb/` and `data/Color250_rgb/` (originals only, no bundled results).
 
-## 3. Image-quality metrics
+## 2 · Published-method baselines  ⏱ ~5 min
+The six methods bundled with Color250 — your SOTA comparison, no reimplementation.
+```powershell
+foreach ($k in 1..6) { python eval_pregen.py --originals data/Color250_rgb --results data/Color250/images --suffix $k }
 ```
-python run_quality.py --images data/Cadik_rgb --decolorizer paper3_b123
-```
-**Output:** folder-mean CCPR / CCFR / E-score + the isoluminant-collapse count:
-```
-decolorizer=paper3_b123  images=25
-  CCPR : 0.6173
-  CCFR : 0.9918
-  E    : 0.7201
-  isoluminant_collapse: 62  (lower=better)
-```
-Swap `--decolorizer` to compare methods. *Note:* for the paper's **quality** config the
-full method runs with saliency off — so `paper3_b123` (the base) is the fair "proposed"
-row for quality tables; `paper3` (saliency on) is the downstream config.
+`_1` Lu 2014 · `_2` Lu 2012 · `_3` CIE Y · `_4` Grundland 07 · `_5` Smith 08 · `_6` Color2Gray 05
 
-## 4. Downstream classification  (needs torch + your 4060)
-```
-python run_classification.py --data-dir data/UCM/images --decolorizer paper3
-python run_classification.py --data-dir data/AID/data   --decolorizer paper3
-```
-**Output:** per-epoch validation accuracy then the best:
-```
-decolorizer=paper3  classes=21  train=1680  val=420
-epoch  1/15  val_acc=0.83..  best=0.83..
-...
-BEST val_acc (paper3): 0.96..
+## 3 · Fixed-standard baselines — quality
+```powershell
+python run_quality.py --images data/Cadik_rgb    --decolorizer bt709
+python run_quality.py --images data/Color250_rgb --decolorizer bt709
+python quality_nr.py  --images data/Cadik_rgb    --decolorizer bt709
+python quality_nr.py  --images data/Color250_rgb --decolorizer bt709
 ```
 
-## 5. Visual comparison — SINGLE image  (for the professor)
+## 4 · Fixed-standard baseline — downstream  ⏱ UCM ~10 min, AID ~40 min
+Export first so the baseline and the learned methods go through an identical pipeline.
+```powershell
+python export_gray.py --data-dir data/UCM/images --decolorizer bt709 --out data/UCM_bt709
+python export_gray.py --data-dir data/AID/data   --decolorizer bt709 --out data/AID_bt709
+python run_classification.py --data-dir data/UCM_bt709 --decolorizer bt601
+python run_classification.py --data-dir data/AID_bt709 --decolorizer bt601
 ```
-python show_image.py --image data/Cadik_rgb/1.png --out figs/compare.png
-python show_image.py --image data/Cadik_rgb/1.png --internals --out figs/internals.png
-```
-- **default:** Original RGB + each method's grayscale, each labelled with its E-score.
-- **`--internals`:** the pipeline — chaos → Retinex → chroma → saliency → full paper3.
-- Works on ANY image path (a dataset image *or your own photo*).
+(`bt601` on an already-gray image is the identity, so you train on the exported grays.)
 
-**Output:** `wrote figs/compare.png` (or `figs/internals.png`) — open the PNG.
+## 5 · The oracle — ceiling + Stage-1 targets  ⏱ ~30–45 min (slowest step)
+```powershell
+python cue_search.py --images data/Cadik_rgb    --out targets_cadik.csv
+python cue_search.py --images data/Color250_rgb --out targets_color250.csv
+python cue_search.py --images data/UCM/images --per-class 20 --out targets_ucm.csv
+python cue_search.py --images data/AID/data    --per-class 15 --out targets_aid.csv
+```
+Add `--samples 80` to roughly halve the time if needed (default 150).
 
-## 6. Visual comparison — GRID of several images
+## 6 · Stage 1 — global cue weights
+```powershell
+python fusion_vit.py --targets targets_cadik.csv targets_color250.csv targets_ucm.csv targets_aid.csv --epochs 80
 ```
-python make_figures.py --images data/Cadik_rgb --n 5 --out figs/cadik_montage.png
-```
-**Output:** `wrote figs/cadik_montage.png (W, H)`. Grid: rows = images, columns =
-[Original | bt601 | B1 | B1+2 | B1+2+3 | paper3 (full)].
+Prints held-out E for the ViT vs fixed BT.709, and saves `fusion_vit.pt`.
 
-## 7. Timing / latency
+## 7 · Evaluate Stage 1
+```powershell
+python run_quality.py --images data/Cadik_rgb    --decolorizer vit:fusion_vit.pt
+python run_quality.py --images data/Color250_rgb --decolorizer vit:fusion_vit.pt
+python quality_nr.py  --images data/Cadik_rgb    --decolorizer vit:fusion_vit.pt
+python export_gray.py --data-dir data/UCM/images --decolorizer vit:fusion_vit.pt --out data/UCM_vit
+python export_gray.py --data-dir data/AID/data   --decolorizer vit:fusion_vit.pt --out data/AID_vit
+python run_classification.py --data-dir data/UCM_vit --decolorizer bt601
+python run_classification.py --data-dir data/AID_vit --decolorizer bt601
 ```
-python bench.py --images data/Cadik_rgb
+
+## 8 · Stage 2 — per-pixel fusion on the downstream loss
+```powershell
+python cache_cues.py --data-dir data/UCM/images --out cache/UCM --per-class 40
+python train_stage2.py --cache cache/UCM --epochs 20 --out stage2_vit.pt
 ```
-**Output:** ms/image and images/second per method:
+
+## 9 · Evaluate Stage 2
+```powershell
+python run_quality.py --images data/Cadik_rgb    --decolorizer vit2:stage2_vit.pt
+python run_quality.py --images data/Color250_rgb --decolorizer vit2:stage2_vit.pt
+python export_gray.py --data-dir data/UCM/images --decolorizer vit2:stage2_vit.pt --out data/UCM_vit2
+python run_classification.py --data-dir data/UCM_vit2 --decolorizer bt601
 ```
-method           ms/img    img/s
-bt601              0.1x    ....
-paper3            ~20-30   ....
+
+## 10 · Latency
+```powershell
+python bench.py --images data/Cadik_rgb --methods bt601,bt709,vit:fusion_vit.pt,vit2:stage2_vit.pt
 ```
-Re-run on the 4060 box **and the Raspberry Pi 5** — those are your deployment numbers
-and the baseline the ViT must beat on the accuracy↔latency trade-off.
+Re-run this one on the Raspberry Pi 5 for the deployment numbers.
+
+## 11 · Figures
+```powershell
+python show_image.py --image data/Cadik_rgb/<file>.png --internals --out figs/internals.png
+python show_image.py --image data/Cadik_rgb/<file>.png --methods bt709,vit:fusion_vit.pt,vit2:stage2_vit.pt --out figs/compare.png
+python make_figures.py --images data/Cadik_rgb --n 5 --methods bt709,vit:fusion_vit.pt --out figs/montage.png
+```
+Then paste your numbers into the block at the top of `make_charts.py` and run:
+```powershell
+python make_charts.py
+```
 
 ---
 
-### Quick "show the professor" sequence
-```
-python show_image.py --image data/Cadik_rgb/3.png --out figs/compare.png
-python show_image.py --image data/Cadik_rgb/3.png --internals --out figs/internals.png
-python make_figures.py --images data/Cadik_rgb --n 5 --out figs/cadik_montage.png
-python bench.py --images data/Cadik_rgb
-```
+### Critical path
+Steps **2** and **5** are the ones that decide whether the re-based method holds up —
+the published-baseline table and the new oracle ceiling. Run those first.

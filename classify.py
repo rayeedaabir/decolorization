@@ -1,6 +1,6 @@
 """Downstream classification pipeline (MobileNetV3-Large).
 
-Mirrors Paper 3's setup: 224x224 input, grayscale replicated to 3 channels,
+Protocol: 224x224 input, grayscale replicated to 3 channels,
 Adam @ lr 5e-4, cross-entropy, 15 epochs. This is the 'does the gray help the
 real task?' measurement. Requires torch + torchvision.
 """

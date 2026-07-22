@@ -4,7 +4,7 @@ Method comparison (default) - original + each method's grayscale, labelled with
 its E-score on this image:
     python show_image.py --image data/Cadik_rgb/56.png --out figs/compare.png
 
-Pipeline internals - how paper3 builds the result, branch by branch:
+Cue-bank internals - the cues the model combines:
     python show_image.py --image data/Cadik_rgb/56.png --internals --out figs/internals.png
 
 --image accepts ANY RGB image (a dataset image or your own photo).

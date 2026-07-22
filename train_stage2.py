@@ -39,7 +39,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", required=True); ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--bs", type=int, default=16); ap.add_argument("--lr", type=float, default=3e-4)
-    ap.add_argument("--anchor", type=float, default=0.1, help="weight on 'stay near Paper 3' term")
+    ap.add_argument("--anchor", type=float, default=0.1, help="weight on the 'stay near BT.709' anchor")
     ap.add_argument("--val-frac", type=float, default=0.2); ap.add_argument("--out", default="stage2_vit.pt")
     a = ap.parse_args()
     dev = "cuda" if torch.cuda.is_available() else "cpu"

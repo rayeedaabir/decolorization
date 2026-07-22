@@ -1,0 +1,11 @@
+numpy>=1.24
+pillow>=9
+opencv-python>=4.8   # Gaussian/bilateral/CLAHE for Paper 3 branches 2-3 + post-processing
+torch>=2.0
+torchvision>=0.15
+
+# Optional (uncomment when needed):
+# scikit-image       # extra colour ops / NIQE
+# scipy              # Gaussian filters for multi-scale Retinex
+# piq                # ready-made BRISQUE / other IQA metrics
+pyiqa>=0.1.10        # NIQE / BRISQUE for quality_nr.py

@@ -1,13 +1,12 @@
-"""No-reference quality (NIQE, BRISQUE) via pyiqa - compare to Paper 3 Table I.
+"""No-reference quality (NIQE, BRISQUE) via pyiqa - compare methods against each other.
 Lower is better for both.
 
     pip install pyiqa
-    python quality_nr.py --images data/Cadik_rgb    --decolorizer paper3 --ref cadik
-    python quality_nr.py --images data/Color250_rgb --decolorizer paper3 --ref color250
-    python quality_nr.py --images data/UCM/images --decolorizer paper3 --per-class 20
-    python quality_nr.py --images data/AID/data    --decolorizer paper3 --per-class 15
+    python quality_nr.py --images data/Cadik_rgb    --decolorizer bt709
+    python quality_nr.py --images data/Color250_rgb --decolorizer vit:fusion_vit.pt
+    python quality_nr.py --images data/UCM/images --decolorizer bt709 --per-class 20
+    python quality_nr.py --images data/AID/data    --decolorizer bt709 --per-class 15
 
-Paper 3 (Proposed): Cadik NIQE 7.34 / BRISQUE 22.11 ; Color250 NIQE 6.23 / BRISQUE 30.38.
 NIQE needs images at least ~96 px per side (it works on 96-px blocks); small images are
 upscaled to --min-side before scoring so tiny Cadik images don't crash it. pyiqa != the
 paper's MATLAB implementation, so treat small gaps as implementation differences.
@@ -19,7 +18,7 @@ import pyiqa
 from decolorizers import get
 from cues import collect
 
-PAPER = {"cadik": (7.34, 22.11), "color250": (6.23, 30.38)}
+
 
 
 def load_for_iqa(path, min_side):
@@ -36,8 +35,7 @@ def load_for_iqa(path, min_side):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--images", required=True)
-    ap.add_argument("--decolorizer", default="paper3")
-    ap.add_argument("--ref", choices=list(PAPER), default=None)
+    ap.add_argument("--decolorizer", default="bt709", help="registry name, or vit:CKPT / vit2:CKPT")
     ap.add_argument("--recursive", action="store_true")
     ap.add_argument("--per-class", type=int, default=0)
     ap.add_argument("--min-side", type=int, default=192, help="upscale images smaller than this")
@@ -69,11 +67,6 @@ def main():
     print(f"decolorizer={a.decolorizer}  images={len(ns)}" + (f"  (skipped {skipped})" if skipped else ""))
     print(f"  NIQE   : {N:.2f}  (lower better)")
     print(f"  BRISQUE: {B:.2f}  (lower better)")
-    if a.ref:
-        pn, pb = PAPER[a.ref]
-        print(f"  Paper 3 (Proposed, {a.ref}): NIQE {pn}  BRISQUE {pb}")
-        print(f"  Delta: NIQE {N-pn:+.2f} ({(N-pn)/pn*100:+.1f}%)  "
-              f"BRISQUE {B-pb:+.2f} ({(B-pb)/pb*100:+.1f}%)")
 
 
 if __name__ == "__main__":

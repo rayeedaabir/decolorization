@@ -5,7 +5,7 @@ Example:
     python run_classification.py --data-dir data/AID --decolorizer chroma_demo --epochs 15
 
 Swap --decolorizer for any registered method (bt601, bt709, average, chroma_demo,
-and later paper3 / vit) to compare downstream accuracy on identical settings.
+and vit: / vit2: checkpoints) to compare downstream accuracy on identical settings.
 """
 import argparse
 from decolorizers import get, REGISTRY

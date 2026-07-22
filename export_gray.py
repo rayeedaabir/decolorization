@@ -3,7 +3,7 @@ Much faster for downstream training (decolorize once, not every epoch), and the 
 to classify with the ViT method.
 
     python export_gray.py --data-dir data/UCM/images --decolorizer vit:fusion_vit.pt --out data/UCM_vit
-    python export_gray.py --data-dir data/UCM/images --decolorizer paper3            --out data/UCM_p3
+    python export_gray.py --data-dir data/UCM/images --decolorizer bt709             --out data/UCM_bt709
     python run_classification.py --data-dir data/UCM_vit --decolorizer bt601   # bt601 = identity on gray
     python run_classification.py --data-dir data/UCM_p3  --decolorizer bt601
 """

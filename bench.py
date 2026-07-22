@@ -11,10 +11,20 @@ import numpy as np
 from PIL import Image
 from decolorizers import get
 
+
+def get_dec(name):
+    if name.startswith("vit2:"):
+        from stage2 import load_decolorizer as l2
+        return l2(name.split(":", 1)[1])
+    if name.startswith("vit:"):
+        from fusion_vit import load_decolorizer as l1
+        return l1(name.split(":", 1)[1])
+    return get(name)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--images"); ap.add_argument("--demo", action="store_true")
-    ap.add_argument("--methods", default="bt601,bt709,paper3_b1,paper3_b12,paper3_b123,paper3")
+    ap.add_argument("--methods", default="bt601,bt709", help="registry names, or vit:CKPT / vit2:CKPT")
     ap.add_argument("--size", type=int, default=256); ap.add_argument("--reps", type=int, default=3)
     a = ap.parse_args()
     if a.demo:
@@ -26,7 +36,7 @@ def main():
                 for f in files[:20]]
     print(f"{len(imgs)} images @ {a.size}x{a.size}, {a.reps} reps\n{'method':14s}{'ms/img':>9s}{'img/s':>9s}")
     for m in a.methods.split(","):
-        dec = get(m); dec(imgs[0])
+        dec = get_dec(m); dec(imgs[0])
         t = time.perf_counter()
         for _ in range(a.reps):
             for im in imgs: dec(im)
