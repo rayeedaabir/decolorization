@@ -1,0 +1,13 @@
+{
+  "title": "Per-Image Cue Weighting for Real-Time Decolorization on Edge Devices",
+  "description": "Code, trained models, figures, and demonstration media for a 155k-parameter vision-transformer selector that chooses per-image weightings over a five-cue bank for real-time RGB-to-grayscale decolorization on edge devices (ICASSP 2027 submission).",
+  "upload_type": "software",
+  "license": "MIT",
+  "access_right": "open",
+  "creators": [
+    { "name": "Ahsan, Rayeed Aabir", "affiliation": "North South University" },
+    { "name": "Rahman, Rashedur Mohammad", "affiliation": "North South University" }
+  ],
+  "keywords": ["decolorization", "color-to-grayscale", "edge computing",
+               "vision transformer", "contrast preservation", "Raspberry Pi", "real-time"]
+}

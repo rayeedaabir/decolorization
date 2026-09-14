@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Per-Image Cue Weighting for Real-Time Decolorization on Edge Devices"
+version: 1.0.0
+date-released: 2026-09-16
+license: MIT
+repository-code: "https://github.com/rayeedaabir/decolorization.git"
+doi: 10.5281/zenodo.XXXXXXX
+authors:
+  - family-names: Ahsan
+    given-names: Rayeed Aabir
+    affiliation: North South University
+  - family-names: Rahman
+    given-names: Rashedur Mohammad
+    affiliation: North South University
