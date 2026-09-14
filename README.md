@@ -14,7 +14,7 @@ This project learns, **per image**, how to blend a small bank of colour cues so 
 
 ## In a nutshell
 
-![A colour-vision plate converted four ways](figures\teaser.png)
+![A colour-vision plate converted four ways](figures/teaser.png)
 
 *(a)* colour input, *(b)* standard BT.709 grayscale, the figure has vanished, *(c)* a strong classical baseline, *(d)* ours, the figure is preserved. The score under each grayscale panel is that image's iso-luminant contrast (**CCPR-iso**): higher means more of the colour-only structure survived.
 
