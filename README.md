@@ -2,7 +2,7 @@
 
 > Turn colour images into grayscale that keeps the differences your eyes see in colour — fast enough to run live on a Raspberry Pi.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22758733.svg)](https://doi.org/10.5281/zenodo.22758733)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22758732.svg)](https://doi.org/10.5281/zenodo.22758732)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 
