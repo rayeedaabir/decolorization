@@ -1,0 +1,5 @@
+seed,regression_E,bt709_E,pct_vs_bt709,constraint
+0,0.8506,0.8318,+2.26,softmax
+1,0.8433,0.8343,+1.08,softmax
+2,0.8409,0.8268,+1.71,softmax
+mean,0.8449,0.8310,+1.68,softmax

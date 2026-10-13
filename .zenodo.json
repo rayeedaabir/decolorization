@@ -1,0 +1,22 @@
+{
+  "title": "Per-Image Cue Weighting for Real-Time Decolorization on Edge Devices: code, models and results",
+  "description": "<p>Code, trained models, result tables and demonstration media for the article <em>Per-Image Cue Weighting for Real-Time Decolorization on Edge Devices</em> (R. A. Ahsan and R. M. Rahman, North South University; manuscript under review).</p><p>A 155k-parameter vision-transformer selector reads a 128&times;128 thumbnail and chooses one of 16 convex weightings of four cues (the R, G and B channels and a dominant opponent-chroma axis); the weighted sum is the grayscale output. The archive contains the deployed model and codebook, the NumPy export used on the Raspberry Pi 5, every script behind the article's tables and figures, the raw result files, and the trained ablation checkpoints.</p><p>Version 2.0.0 is the four-cue method reported in the article. Version 1.0.0 is an earlier five-cue release.</p>",
+  "upload_type": "software",
+  "version": "2.0.0",
+  "license": "MIT",
+  "access_right": "open",
+  "creators": [
+    { "name": "Ahsan, Rayeed Aabir", "affiliation": "North South University" },
+    { "name": "Rahman, Rashedur Mohammad", "affiliation": "North South University" }
+  ],
+  "keywords": [
+    "decolorization",
+    "color-to-grayscale",
+    "contrast preservation",
+    "iso-luminant contrast",
+    "vision transformer",
+    "edge computing",
+    "Raspberry Pi",
+    "real-time"
+  ]
+}

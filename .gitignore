@@ -2,12 +2,19 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# datasets are third-party — do not redistribute
+# Datasets are third-party and are not redistributed (see data/README.md)
 data/*
 !data/README.md
 
-# regenerable ablation scratch / outputs
-t_*.csv
-abl_*_s*.pt
-ablation_table.csv
-figs/
+# Files written by re-running the scripts from the repository root.
+# The archived copies live in models/, results/, ablations/ and figures/ and ARE tracked.
+/*.csv
+/*.pt
+/*.npz
+/*.png
+/*.pdf
+/*.mp4
+/snaps/
+
+# Flat working copy used to retrain with the ablation drivers (see README, "Retraining")
+/*.py

@@ -1,0 +1,20 @@
+# Keep source files byte-identical on every operating system.
+# The model files record the SHA-256 of cues.py, metrics.py, color.py, build_codebook.py
+# and fusion_vit.py (see src/provenance.py); line-ending conversion on checkout would
+# change those hashes on Windows.
+*.py     text eol=lf
+*.md     text eol=lf
+*.cff    text eol=lf
+*.json   text eol=lf
+*.txt    text eol=lf
+
+# Result tables are stored exactly as the scripts wrote them (no line-ending conversion).
+*.csv    -text
+
+# Binary artifacts
+*.pt     binary
+*.npz    binary
+*.png    binary
+*.pdf    binary
+*.mp4    binary
+*.gif    binary

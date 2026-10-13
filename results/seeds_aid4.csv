@@ -1,0 +1,7 @@
+data_dir,seed,best_val_acc
+data/AID_bt709,0,0.9345
+data/AID_bt709,1,0.9350
+data/AID_bt709,2,0.9320
+data/AID_vit4,0,0.9315
+data/AID_vit4,1,0.9295
+data/AID_vit4,2,0.9330

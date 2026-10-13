@@ -1,0 +1,16 @@
+data_dir,seed,best_val_acc
+data/Flowers_bt709_full,0,0.9274
+data/Flowers_bt709_full,1,0.9280
+data/Flowers_bt709_full,2,0.9274
+data/Flowers_bt709_full,3,0.9347
+data/Flowers_bt709_full,4,0.9347
+data/Flowers_cv2_full,0,0.9176
+data/Flowers_cv2_full,1,0.9231
+data/Flowers_cv2_full,2,0.9164
+data/Flowers_cv2_full,3,0.9139
+data/Flowers_cv2_full,4,0.9145
+data/Flowers_vit4,0,0.9072
+data/Flowers_vit4,1,0.9170
+data/Flowers_vit4,2,0.9023
+data/Flowers_vit4,3,0.8974
+data/Flowers_vit4,4,0.9090

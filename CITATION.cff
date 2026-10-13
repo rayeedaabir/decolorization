@@ -1,11 +1,24 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+type: software
 title: "Per-Image Cue Weighting for Real-Time Decolorization on Edge Devices"
-version: 1.0.0
-date-released: 2026-09-16
+abstract: >-
+  Code, trained models and result files for a per-image decolorization method that
+  selects a convex weighting of four cues (R, G, B and an opponent-chroma axis) from a
+  16-entry codebook using a 155k-parameter vision-transformer selector, with
+  single-thread desktop and Raspberry Pi 5 deployment.
+version: 2.0.0
+date-released: 2026-10-14
 license: MIT
-repository-code: "https://github.com/rayeedaabir/decolorization.git"
-doi: 10.5281/zenodo.XXXXXXX
+repository-code: "https://github.com/rayeedaabir/decolorization"
+doi: 10.5281/zenodo.22758732
+keywords:
+  - decolorization
+  - color-to-grayscale
+  - contrast preservation
+  - vision transformer
+  - edge computing
+  - Raspberry Pi
 authors:
   - family-names: Ahsan
     given-names: Rayeed Aabir

@@ -1,0 +1,12 @@
+Desktop timing, 11 Oct 2026, one session, quiet machine (AMD Ryzen 5 7600X, Windows 11), 256x256, 1 thread.
+
+> python time_4cue.py --ckpt fusion_vit_rgbchroma.pt --codebook codebook_rgbchroma.npz --threads 1 --size 256
+sanity |4cue - 5cue(MSR=0)| max = 0.00e+00  (should be ~0)
+4-cue (RGB+chroma) @ 256x256, 1 thread(s): 12.72 ms/frame  (78.6 fps)   params=155.0k size=0.62MB
+  per-stage: selector 3.2 ms | cue bank 9.9 ms | fuse 0.4 ms
+
+> python compare_stats.py --originals data/Color250_rgb --methods bt709,bt709stretch,cv2decolor --time --threads 1 --time-size 256 --limit 20 --out timing_all.csv
+timing on 20 images @ 256x256, 3 reps  [cpu, torch threads=1]
+  bt709                               0.31 ms    3206.0 img/s
+  bt709stretch                        0.35 ms    2820.5 img/s
+  cv2decolor                         85.60 ms      11.7 img/s

@@ -1,0 +1,11 @@
+data_dir,seed,best_val_acc
+data/UCM_bt709,0,0.9786
+data/UCM_bt709,1,0.9786
+data/UCM_bt709,2,0.9738
+data/UCM_bt709,3,0.9714
+data/UCM_bt709,4,0.9810
+data/UCM_vit4,0,0.9762
+data/UCM_vit4,1,0.9857
+data/UCM_vit4,2,0.9643
+data/UCM_vit4,3,0.9738
+data/UCM_vit4,4,0.9548

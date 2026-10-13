@@ -74,17 +74,17 @@ def main():
     ap.add_argument("--classical", default="cv2decolor",
                     help="strong classical baseline (default cv2decolor = Lu 2012 [8])")
     ap.add_argument("--proposed", default="", help="proposed decolorizer spec, e.g. vit:fusion_vit.pt")
-    ap.add_argument("--ckpt", default="fusion_vit.pt", help="used to build --proposed if not given")
-    ap.add_argument("--codebook", default="codebook.npz")
-    ap.add_argument("--classical-label", default="Lu et al. [8]")
+    ap.add_argument("--ckpt", default="fusion_vit_rgbchroma.pt", help="used to build --proposed if not given")
+    ap.add_argument("--codebook", default="codebook_rgbchroma.npz")
+    ap.add_argument("--classical-label", default="OpenCV cv2decolor", help="label for the classical baseline panel")
     ap.add_argument("--metric", default="ccpr_iso", choices=["ccpr_iso", "e", "both"],
                     help="annotation under each grayscale panel (default ccpr_iso: the "
                          "iso-luminant metric this figure is about)")
     ap.add_argument("--out", default="figs/teaser")
     ap.add_argument("--size", type=int, default=0, help="0 = native resolution (crispest)")
-    ap.add_argument("--dpi", type=int, default=400)
-    ap.add_argument("--wide", action="store_true", help="two-column width (7.0in) instead of single (3.45in)")
-    ap.add_argument("--row", action="store_true", help="1x4 horizontal strip (full-width, short) — best as a top-of-page teaser")
+    ap.add_argument("--dpi", type=int, default=600)
+    ap.add_argument("--grid", action="store_true", help="old 2x2 layout instead of the default 1x4 row")
+    ap.add_argument("--wide", action="store_true", help="2x2 grid at two-column width (7.0in); only meaningful with --grid")
     a = ap.parse_args()
 
     proposed = a.proposed or f"vit:{a.ckpt}:{a.codebook}"
@@ -99,11 +99,11 @@ def main():
         gray = np.asarray(dec(rgb), np.float64)
         panels.append((tag, gray, metric_label(rgb, gray, a.metric)))
 
-    if a.row:
-        fig, axes = plt.subplots(1, 4, figsize=(7.0, 2.15))
-    else:
+    if a.grid:
         W = 7.0 if a.wide else 3.45
         fig, axes = plt.subplots(2, 2, figsize=(W, W * 1.06))
+    else:                                    # default: 1x4 horizontal strip (Fig. 1 teaser)
+        fig, axes = plt.subplots(1, 4, figsize=(7.16, 2.15))
     for ax, (tag, img, lab) in zip(axes.ravel(), panels):
         proposed_panel = tag.startswith("(d)")
         if img.ndim == 3:
@@ -122,7 +122,7 @@ def main():
                     color=ORANGE if proposed_panel else MUTE,
                     fontweight="bold" if proposed_panel else "normal")
 
-    if a.row:
+    if not a.grid:                           # default 1x4 row
         fig.subplots_adjust(left=0.01, right=0.99, top=0.86, bottom=0.15, wspace=0.06)
     else:
         fig.subplots_adjust(left=0.01, right=0.99, top=0.94, bottom=0.06, wspace=0.06, hspace=0.22)

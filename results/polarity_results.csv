@@ -1,0 +1,6 @@
+arm,heldout_E_mean,heldout_E_std,CCPRiso_mean,CCPRiso_std,ceiling_E
+4cue,0.8300,0.0070,0.3443,0.0197,0.8419
+5cue_+1-C,0.8326,0.0126,0.3276,0.0161,0.8416
+6cue_+1-C+MSR,0.8301,0.0104,0.3290,0.0263,0.8422
+p_wilcoxon_5vs4_per_seed,0.9399,0.9748,0.0598
+p_wilcoxon_6vs4_per_seed,0.3275,0.3044,0.7980

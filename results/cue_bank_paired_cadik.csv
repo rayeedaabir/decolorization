@@ -1,0 +1,9 @@
+comparison,metric,n,mean_diff,n_higher,wilcoxon_p
+RGB+CHROMA vs RGB,E,25,+0.0069,6,0.0296
+RGB+MSR vs RGB,E,25,-0.0012,4,0.0018
+full vs RGB+CHROMA,E,25,-0.0083,6,0.0556
+full vs RGB,E,25,-0.0014,5,0.0219
+RGB+CHROMA vs RGB,CCPR_iso,25,+0.0418,13,0.3254
+RGB+MSR vs RGB,CCPR_iso,25,-0.0068,6,0.0296
+full vs RGB+CHROMA,CCPR_iso,25,-0.0327,8,0.1374
+full vs RGB,CCPR_iso,25,+0.0091,7,0.5249

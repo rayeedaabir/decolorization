@@ -1,0 +1,4 @@
+method,n_images,CCPR,CCFR,E,CCPR_iso,ms_per_image,measured_here
+cv2decolor,20,0.703936,0.993245,0.811614,0.151078,85.601,yes
+bt709stretch,20,0.694739,0.990449,0.798720,0.029454,0.355,yes
+bt709,20,0.668054,0.998362,0.777475,0.026730,0.312,yes

@@ -1,0 +1,5 @@
+seed,regression_E,bt709_E,pct_vs_bt709,constraint
+0,0.8467,0.8318,+1.80,none
+1,0.8350,0.8343,+0.08,none
+2,0.8267,0.8268,-0.00,none
+mean,0.8362,0.8310,+0.63,none

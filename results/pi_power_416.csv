@@ -1,0 +1,4 @@
+method,size,frames,ms_per_frame,fps,power_w,energy_mj_per_frame,temp_peak_c,temp_end_c,rss_mb,throttled_hex
+ours,416,530,113.22,8.83,3.244,367.34,57.6,57.1,79,0x0
+bt709,416,18312,3.28,305.20,3.360,11.01,57.6,55.4,84,0x0
+cv2decolor,416,57,1056.71,0.95,3.523,3722.84,58.2,56.5,89,0x0
