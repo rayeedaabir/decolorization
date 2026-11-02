@@ -46,7 +46,6 @@ random frames (Table V). All ten methods, NIQE/BRISQUE, four datasets, the downs
 ablations and the full Raspberry Pi sweep are in the article and in `results/`.
 
 ![Qualitative comparison on Color250: input, BT.709, cv2decolor, proposed](figures/fig2_qualitative.png)
-
 *Qualitative comparison on representative Color250 images (rows): (a) input, (b) fixed BT.709 luma,
 (c) cv2decolor, and (d) the proposed result. Iso-luminant regions that BT.709 flattens are recovered
 by the proposed weighting.*
@@ -54,7 +53,6 @@ by the proposed weighting.*
 ### Live on a Raspberry Pi 5
 
 ![Live deployment on a Raspberry Pi 5: test plate and toy scene, with the 16-prototype codebook](figures/fig4_pi_demo.png)
-
 *Live deployment on the Raspberry Pi 5 with a Logitech Brio 100 USB camera (CPU only, no accelerator).
 (a)–(b) Real-time comparison on a colour-vision Ishihara test plate and a hand-held toy scene: input,
 fixed BT.709, the proposed method, and cv2decolor; the proposed method recovers the test-plate digit
