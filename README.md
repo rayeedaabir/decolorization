@@ -228,7 +228,7 @@ python pi_power_bench.py --weights fusion_vit_np.npz --size 256 --duration 60 --
 
 Repeat with `--size` 32, 96, 128, 160, 224, 320 and 416 for Table A1; each run writes
 `pi_power_<size>.csv`. Power is the PMIC rail-sum estimate read through `vcgencmd pmic_read_adc`.
-The live demonstration (Fig. 4, and the 51 s clip `assets/pi_demo/demo_decolor.mp4` with its
+The live demonstration (Fig. 4, and the 63 s clip `assets/pi_demo/demo_decolor.mp4` with its
 per-frame log `assets/pi_demo/demo_fps_log.csv`) uses
 `python pi_live_decolor.py --record` (see `--help`; key `p` saves a snapshot set).
 
