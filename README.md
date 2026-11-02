@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.14-blue)
 
 [Raspberry Pi 5 live demo.](https://github.com/user-attachments/assets/6e56217f-68b4-4c1d-89b2-1f9eedd712cc)
+
 *Live decolorization on a Raspberry Pi 5 with a USB camera (CPU only, no accelerator).*
 
 Code, trained models and result files for the article **“Per-Image Cue Weighting for Real-Time
