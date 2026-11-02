@@ -4,6 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.14-blue)
 
+VIDEO_URL_HERE
+
+*Live decolorization on a Raspberry Pi 5 with a USB camera (CPU only, no accelerator).*
+
 Code, trained models and result files for the article **“Per-Image Cue Weighting for Real-Time
 Decolorization on Edge Devices”** (R. A. Ahsan and R. M. Rahman, North South University;
 manuscript under review).
@@ -40,6 +44,22 @@ E and CCPR-iso on Color250 at native resolution (Table I); latency at 256×256: 
 thread (Table IV); Raspberry Pi 5 on the CPU with the libraries' default threading, on synthetic
 random frames (Table V). All ten methods, NIQE/BRISQUE, four datasets, the downstream study, the
 ablations and the full Raspberry Pi sweep are in the article and in `results/`.
+
+![Qualitative comparison on Color250: input, BT.709, cv2decolor, proposed](figures/fig2_qualitative.png)
+
+*Qualitative comparison on representative Color250 images (rows): (a) input, (b) fixed BT.709 luma,
+(c) cv2decolor, and (d) the proposed result. Iso-luminant regions that BT.709 flattens are recovered
+by the proposed weighting.*
+
+### Live on a Raspberry Pi 5
+
+![Live deployment on a Raspberry Pi 5: test plate and toy scene, with the 16-prototype codebook](figures/fig4_pi_demo.png)
+
+*Live deployment on the Raspberry Pi 5 with a Logitech Brio 100 USB camera (CPU only, no accelerator).
+(a)–(b) Real-time comparison on a colour-vision Ishihara test plate and a hand-held toy scene: input,
+fixed BT.709, the proposed method, and cv2decolor; the proposed method recovers the test-plate digit
+that BT.709 flattens. (c)–(d) The selector's full 16-prototype codebook for the same two scenes, with
+the prototype chosen by the ViT boxed in yellow.*
 
 ## How it works
 
