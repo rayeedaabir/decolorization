@@ -4,8 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.14-blue)
 
-VIDEO_URL_HERE
-
+[Raspberry Pi 5 live demo.](https://github.com/user-attachments/assets/6e56217f-68b4-4c1d-89b2-1f9eedd712cc)
 *Live decolorization on a Raspberry Pi 5 with a USB camera (CPU only, no accelerator).*
 
 Code, trained models and result files for the article **“Per-Image Cue Weighting for Real-Time
@@ -26,7 +25,6 @@ and at **12.2 FPS on a Raspberry Pi 5** with no accelerator.
 > [10.5281/zenodo.22758732](https://doi.org/10.5281/zenodo.22758732).
 
 ![Near-iso-luminant plate: input, BT.709, OpenCV cv2decolor, proposed](figures/fig1_teaser.png)
-
 *(a) input, (b) BT.709 luma: the figure vanishes, (c) Lu et al.'s contrast-preserving
 decolorization as implemented in OpenCV (`cv2.decolor`, called cv2decolor in the article), (d) proposed. CCPR-iso is the fraction of
 near-iso-luminant colour contrast preserved in that image.*
